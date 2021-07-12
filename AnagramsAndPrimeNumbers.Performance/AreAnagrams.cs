@@ -38,5 +38,10 @@ namespace AnagramsAndPrimeNumbers.Performance
 		[ArgumentsSource(nameof(AreAnagrams.GetArguments))]
 		public bool AreAnagramsViaGetAnagramNumberUsingSwitchLetterDistribution(string value1, string value2) =>
 			AnagramComparisons.AreAnagramsViaGetAnagramNumberUsingSwitchLetterDistribution(value1, value2);
+
+		[Benchmark]
+		[ArgumentsSource(nameof(AreAnagrams.GetArguments))]
+		public bool AreAnagramsViaArrayIncDec(string value1, string value2) =>
+			AnagramComparisons.AreAnagramsViaArrayIncDec(value1, value2);
 	}
 }

@@ -119,6 +119,46 @@ namespace AnagramsAndPrimeNumbers
 
 			return true;
 		}
+		
+		/// <summary>
+		/// Compares by creating an array representing the alphabet, incrementing all the letters used for the first
+		/// word, decrementing all the letters used for the second word, and making sure the array is back to all
+		/// zeroes.
+		/// </summary>
+		public static bool AreAnagramsViaArrayIncDec(string value1, string value2)
+		{
+			// ushort should (I think) remove casting when used
+			const ushort a = 97;
+            
+			if (value1 is null) throw new ArgumentNullException(nameof(value1));
+			if (value2 is null) throw new ArgumentNullException(nameof(value2));
+
+			if (value1.Length != value2.Length) { return false; }
+
+			// Create an array representing the alphabet
+			// - charCount[0] := Count of 'a'
+			// - charCount[25] := Count of 'z'
+			// sbyte allows for up to 127 occurrences of each letter, and allows negative values
+			var charCount = new sbyte[26]; 
+
+			// For each letter, increment the letter count for the first word and decrement the letter
+			// count for the second word.
+			// (Count is allowed to go negative, and one loop will be faster than two.)
+			for (var i = 0; i < value1.Length; i++)
+			{
+				charCount[value1[i] - a]++;
+				charCount[value2[i] - a]--;
+			}
+            
+			// If the words are anagrams, all counts should be back to zero, so any non-zero counts implies
+			// the words are not anagrams.
+			for (var i = 0; i < 26; i++)
+			{
+				if (charCount[i] != 0) return false;
+			}
+
+			return true;
+		}
 
 		public static BigInteger GetAnagramNumber(this string self)
 		{
